@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+
+	<select id="selectMainMenu" resultType="com.hangaebal.vo.root.MainMenuVO">
+		SELECT
+			id
+			,name
+			,has_shortcut
+		FROM menu menu
+		JOIN (
+			SELECT parent_id as p, IF(shortcut = '', 'n', 'y') as has_shortcut FROM menu
+			WHERE disable_yn = 'n' AND del_yn = 'n'
+			GROUP BY parent_id
+		) menu_short
+		ON menu.id = menu_short.p
+		WHERE parent_id = 0 AND disable_yn = 'n' AND del_yn = 'n'
+		ORDER BY seq
+	</select>
+	
+	<select id="selectSubMenu" resultType="com.hangaebal.vo.MenuTableVO">
+		SELECT
+			id
+			,parent_id
+			,name
+			,shortcut
+			,url
+			,line_yn
+		FROM menu
+		WHERE
+			parent_id != 0
+			AND disable_yn = 'n'
+			AND del_yn = 'n'
+		ORDER BY parent_id, seq
+	</select>
+
+</mapper>

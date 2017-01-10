@@ -21,6 +21,20 @@ public class RootController {
 	@Autowired
 	SampleService sampleService;
 
+	@Autowired
+	MainService mainService;
+
+	@RequestMapping("/")
+	public ModelAndView index() {
+
+		List<MainMenuVO> mainMenuList = mainService.selectMainMenu();
+		List<MenuTableVO> subMenuList = mainService.selectSubMenu();
+
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("mainMenuList", mainMenuList);
+		mav.addObject("subMenuList", subMenuList);
+		return mav;
+	}
 
 	@RequestMapping("/memoList")
 	public ModelAndView memoList() {
