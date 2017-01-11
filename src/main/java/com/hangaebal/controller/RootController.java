@@ -36,13 +36,19 @@ public class RootController {
 		return mav;
 	}
 
-	@RequestMapping("/memoList")
-	public ModelAndView memoList() {
 
-		List<MenuTableVO> memoList = sampleService.selectMemoList();
-		ModelAndView mav = new ModelAndView("memo");
-		mav.addObject("memoList", memoList);
-		return mav;
+	@RequestMapping(value = "/home", method=RequestMethod.GET)
+	public String home() {
+		return "site.homepage";
 	}
 
+	@RequestMapping(value = "/greet", method=RequestMethod.GET)
+	public ModelAndView greet(@RequestParam(value = "name", required=false, defaultValue="World!")final String name, final Model model) {
+		return new ModelAndView("site.greeting", "name", name);
+	}
+
+	@RequestMapping(value = "/greet/{name}", method= RequestMethod.GET)
+	public ModelAndView greetTwoWays(@PathVariable(value="name") final String name, final Model model) {
+		return new ModelAndView("site.greeting", "name", name);
+	}
 }
