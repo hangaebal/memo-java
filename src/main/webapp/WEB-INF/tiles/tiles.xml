@@ -22,4 +22,8 @@
 	<definition name="site.greeting" extends="layout.basic">
 		<put-attribute name="body" value="/WEB-INF/tiles/view/home/greeting.jsp" />
 	</definition>
+
+	<definition name="home.index" extends="layout.basic">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/home/index.jsp" />
+	</definition>
 </tiles-definitions>
