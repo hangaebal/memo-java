@@ -25,15 +25,9 @@ public class RootController {
 	MainService mainService;
 
 	@RequestMapping("/")
-	public ModelAndView index() {
+	public String index() {
 
-		List<MainMenuVO> mainMenuList = mainService.selectMainMenu();
-		List<MenuTableVO> subMenuList = mainService.selectSubMenu();
-
-		ModelAndView mav = new ModelAndView("index");
-		mav.addObject("mainMenuList", mainMenuList);
-		mav.addObject("subMenuList", subMenuList);
-		return mav;
+		return "home.index";
 	}
 
 
