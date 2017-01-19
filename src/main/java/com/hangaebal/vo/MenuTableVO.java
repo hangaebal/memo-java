@@ -1,9 +1,11 @@
 package com.hangaebal.vo;
 
+import java.io.Serializable;
+
 /**
  * Created by hcs on 2017. 1. 6..
  */
-public class MenuTableVO {
+public class MenuTableVO implements Serializable {
 	private Long id;
 	private Long parentId;
 	private Long seq;
