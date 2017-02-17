@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<select id="selectMenuList" resultType="com.hangaebal.vo.MenuVO">
+		SELECT *
+		FROM menu
+		WHERE del_yn = 'N'
+		ORDER BY seq
+	</select>
+
+	<insert id="insertMenu" parameterType="com.hangaebal.vo.MenuVO">
+		INSERT INTO menu (
+			seq
+			,title
+			,path
+		) VALUES (
+			#{seq}
+			,#{title}
+			,#{path}
+		)
+	</insert>
+
+	<update id="updateMenu" parameterType="com.hangaebal.vo.MenuVO">
+		UPDATE menu
+		SET
+			seq = #{seq}
+			,title = #{title}
+			,path = #{path}
+		WHERE
+			id = #{id}
+	</update>
+
+	<update id="deleteMenu" parameterType="Long">
+		UPDATE menu
+		SET del_yn = 'Y'
+		WHERE id = #{id}
+	</update>
+</mapper>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE tiles-definitions PUBLIC
 		"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
 		"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
@@ -11,6 +11,11 @@
 		<put-attribute name="header" value="/WEB-INF/tiles/view/header.jsp" />
 		<put-attribute name="body" value="" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/view/footer.jsp" />
+	</definition>
+
+	<definition name="layout.admin" template="/WEB-INF/tiles/layout/admin.jsp">
+		<put-attribute name="title" value="관리자" />
+		<put-attribute name="body" value="" />
 	</definition>
 
 	<!-- Pages -->
@@ -26,4 +31,13 @@
 	<definition name="home.index" extends="layout.basic">
 		<put-attribute name="body" value="/WEB-INF/tiles/view/home/index.jsp" />
 	</definition>
+
+	<!-- 관리자 -->
+	<definition name="admin/*" extends="layout.admin">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/admin/{1}.jsp"/>
+	</definition>
+	<definition name="admin/*/*" extends="layout.admin">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/admin/{1}/{2}.jsp"/>
+	</definition>
+
 </tiles-definitions>

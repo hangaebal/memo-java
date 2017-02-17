@@ -25,7 +25,7 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
 	@Autowired
 	MainService mainService;
 
-	@Override
+	/*@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		logger.info("============= postHandle ============");
 
@@ -34,5 +34,5 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
 
 		modelAndView.addObject("mainMenuList", mainMenuList);
 		modelAndView.addObject("subMenuList", subMenuList);
-	}
+	}*/
 }
