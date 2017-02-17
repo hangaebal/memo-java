@@ -1,5 +1,6 @@
 package com.hangaebal.dao;
 
+import com.hangaebal.vo.ImageTableVO;
 import com.hangaebal.vo.MenuVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,9 @@ public class AdminDAO {
 
 	public void deleteMenu(Long id) {
 		sqlSessionTemplate.update("deleteMenu", id);
+	}
+
+	public void insertImage(ImageTableVO imageTableVO) {
+		sqlSessionTemplate.insert("insertImage", imageTableVO);
 	}
 }

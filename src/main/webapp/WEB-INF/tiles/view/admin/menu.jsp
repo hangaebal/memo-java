@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style>
-	.cursor {cursor: pointer}
+	.cursor {cursor: pointer; text-align: center;}
+	.cursor .glyphicon {font-size: 20px; line-height: 33px;}
 </style>
 <div>
 <form id="menuForm" action="/admin/menu" method="post">
@@ -17,8 +17,8 @@
 		<thead>
 		<tr>
 			<th>드래그</th>
-			<th>Title</th>
-			<th>Path</th>
+			<th>제목</th>
+			<th>경로(영문)</th>
 			<th>삭제</th>
 		</tr>
 		</thead>
@@ -27,11 +27,10 @@
 			<tr>
 				<td class="cursor">
 					<input class="form-control" type="hidden" name="id" value="${menu.id}">
-					<%--<input class="form-control" type="text" name="seq" value="${menu.seq}" required="required">--%>
-					=
+					<span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span>
 				</td>
-				<td><input class="form-control" type="text" name="title" value="${menu.title}" required="required"></td>
-				<td><input class="form-control" type="text" name="path" value="${menu.path}" required="required"></td>
+				<td><input class="form-control" type="text" name="title" value="${menu.title}" required></td>
+				<td><input class="form-control" type="text" name="path" value="${menu.path}" required></td>
 				<td><button type="button" class="btn btn-danger" onclick="deleteRow(event, ${menu.id})">삭제</button></td>
 			</tr>
 		</c:forEach>
@@ -58,7 +57,7 @@
 			} else {
 				var token = $("meta[name='_csrf']").attr("content");
 				var header = $("meta[name='_csrf_header']").attr("content");
-				
+
 				$.ajax({
 					url: '/admin/menu/' + id
 					,method: 'delete'
@@ -76,7 +75,7 @@
 
 	function addRow() {
 		var rowTag = '<tr>'
-			+ '<td class="cursor">=</td>'
+			+ '<td class="cursor"><span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span></td>'
 			+ '<td><input class="form-control" type="text" name="title" required></td>'
 			+ '<td><input class="form-control" type="text" name="path" required></td>'
 			+ '<td><button type="button" class="btn btn-danger" onclick="deleteRow(event)">삭제</button></td>'

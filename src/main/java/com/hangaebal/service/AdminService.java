@@ -1,5 +1,6 @@
 package com.hangaebal.service;
 
+import com.hangaebal.vo.ImageTableVO;
 import com.hangaebal.vo.MenuVO;
 import org.springframework.stereotype.Service;
 
@@ -15,4 +16,6 @@ public interface AdminService {
 	void updateMenu(List<MenuVO> menuList);
 
 	void deleteMenu(Long id);
+
+	void insertImage(ImageTableVO imageTableVO);
 }

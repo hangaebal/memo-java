@@ -10,21 +10,21 @@
 	<link rel="stylesheet" href="/css/normalize.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
 <section class="container">
 
-	<div class="row">
-		<div class="col-md-2">
-			<nav>
-				<a href="/admin/menu">메뉴관리</a>
-				<a href="/admin/post">포스트 관리</a>
-			</nav>
-		</div>
-		<article class="col-md-10">
-			<tiles:insertAttribute name="body" />
-		</article>
-	</div>
+	<nav class="navbar navbar-inverse">
+		<ul class="nav navbar-nav">
+			<li><a href="/admin/menu">메뉴관리</a></li>
+			<li><a href="/admin/post">포스트 관리</a></li>
+		</ul>
+	</nav>
+
+	<article>
+		<tiles:insertAttribute name="body" />
+	</article>
 
 </section>
 <script type="text/javascript">

@@ -36,4 +36,14 @@
 		SET del_yn = 'Y'
 		WHERE id = #{id}
 	</update>
+
+	<insert id="insertImage" parameterType="com.hangaebal.vo.ImageTableVO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO image (
+			title
+			,path
+		) VALUES (
+			#{title}
+			,#{path}
+		)
+	</insert>
 </mapper>

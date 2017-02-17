@@ -2,6 +2,7 @@ package com.hangaebal.service.impl;
 
 import com.hangaebal.dao.AdminDAO;
 import com.hangaebal.service.AdminService;
+import com.hangaebal.vo.ImageTableVO;
 import com.hangaebal.vo.MenuVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,10 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public void deleteMenu(Long id) {
 		adminDAO.deleteMenu(id);
+	}
+
+	@Override
+	public void insertImage(ImageTableVO imageTableVO) {
+		adminDAO.insertImage(imageTableVO);
 	}
 }
