@@ -136,6 +136,9 @@ public class AdminController {
 		returnMap.put("status", "success");
 		returnMap.put("id", imageTableVO.getId());
 		returnMap.put("path", imageTableVO.getPath());
+		returnMap.put("title", imageTableVO.getTitle());
+
+
 
 		return returnMap;
 	}

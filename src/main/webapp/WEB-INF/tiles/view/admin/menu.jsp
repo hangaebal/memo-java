@@ -67,7 +67,7 @@
 				}).done(function() {
 					$(e.target).parents('tr').remove();
 				}).fail(function() {
-					alert('오류가 발생했습니다');
+					alert('오류가 발생했습니다.');
 				});
 			}
 		}
