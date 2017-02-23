@@ -18,7 +18,7 @@
 		ORDER BY seq
 	</select>
 	
-	<select id="selectSubMenu" resultType="com.hangaebal.vo.MenuTableVO">
+	<select id="selectSubMenu" resultType="com.hangaebal.vo.MenuTableVO_old">
 		SELECT
 			id
 			,parent_id

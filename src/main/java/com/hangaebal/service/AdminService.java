@@ -1,8 +1,8 @@
 package com.hangaebal.service;
 
 import com.hangaebal.vo.ImageTableVO;
-import com.hangaebal.vo.MenuVO;
-import org.springframework.stereotype.Service;
+import com.hangaebal.vo.MenuTableVO;
+import com.hangaebal.vo.PostTableVO;
 
 import java.util.List;
 
@@ -11,11 +11,31 @@ import java.util.List;
  */
 public interface AdminService {
 
-	List<MenuVO> selectMenuList();
+	List<MenuTableVO> selectMenuList();
 
-	void updateMenu(List<MenuVO> menuList);
+	void updateMenu(List<MenuTableVO> menuList);
 
 	void deleteMenu(Long id);
 
 	void insertImage(ImageTableVO imageTableVO);
+
+	void insertPost(PostTableVO postTableVO);
+
+	void updateImage(ImageTableVO imageTableVO);
+
+	List<PostTableVO> selectPostList(Long menuId);
+
+	void updatePostSeq(PostTableVO postTableVO);
+
+	PostTableVO selectPostDetail(Long id);
+
+	List<ImageTableVO> selectPostImageList(Long id);
+
+	void deleteImage(Long id);
+
+	void deletePost(Long id);
+
+	void deletePostImage(Long id);
+
+	void updatePost(PostTableVO postTableVO);
 }

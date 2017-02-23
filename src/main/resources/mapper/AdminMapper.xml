@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="admin">
 
-	<select id="selectMenuList" resultType="com.hangaebal.vo.MenuVO">
+	<select id="selectMenuList" resultType="com.hangaebal.vo.MenuTableVO">
 		SELECT *
 		FROM menu
 		WHERE del_yn = 'N'
 		ORDER BY seq
 	</select>
 
-	<insert id="insertMenu" parameterType="com.hangaebal.vo.MenuVO">
+	<insert id="insertMenu" parameterType="com.hangaebal.vo.MenuTableVO">
 		INSERT INTO menu (
 			seq
 			,title
@@ -21,7 +21,7 @@
 		)
 	</insert>
 
-	<update id="updateMenu" parameterType="com.hangaebal.vo.MenuVO">
+	<update id="updateMenu" parameterType="com.hangaebal.vo.MenuTableVO">
 		UPDATE menu
 		SET
 			seq = #{seq}
@@ -46,4 +46,97 @@
 			,#{path}
 		)
 	</insert>
+
+	<insert id="insertPost" parameterType="com.hangaebal.vo.PostTableVO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO post (
+			seq
+			,menu_id
+			,type
+			,title
+			,year
+			,contents
+		) VALUES (
+			(SELECT seq FROM (SELECT  IFNULL(MAX(seq),0) AS seq FROM post WHERE menu_id = 1) p) + 1
+			,#{menuId}
+			,#{type}
+			,#{title}
+			,#{year}
+			,#{contents}
+		)
+	</insert>
+
+	<update id="updateImage" parameterType="com.hangaebal.vo.ImageTableVO">
+		UPDATE image
+		SET
+			post_id = #{postId}
+			,seq = #{seq}
+		WHERE
+			id = #{id}
+	</update>
+
+	<select id="selectPostList" parameterType="Long" resultType="com.hangaebal.vo.PostTableVO">
+		SELECT *
+		FROM post
+		<choose>
+			<when test="value == null">
+				WHERE menu_id = (SELECT id FROM menu ORDER BY seq LIMIT 1)
+			</when>
+			<otherwise>
+				WHERE menu_id = #{value}
+			</otherwise>
+		</choose>
+		AND del_yn = 'N'
+		ORDER by seq
+	</select>
+
+	<update id="updatePostSeq" parameterType="com.hangaebal.vo.PostTableVO">
+		UPDATE post
+		SET seq = #{seq}
+		WHERE id = #{id}
+	</update>
+
+	<select id="selectPostDetail" parameterType="Long" resultType="com.hangaebal.vo.PostTableVO">
+		SELECT *
+		FROM post
+		WHERE id = #{value}
+		AND del_yn = 'N'
+	</select>
+
+	<select id="selectPostImageList" parameterType="Long" resultType="com.hangaebal.vo.ImageTableVO">
+		SELECT *
+		FROM image
+		WHERE post_id = #{value}
+		AND del_yn = 'N'
+		ORDER BY seq
+	</select>
+
+	<update id="deleteImage" parameterType="Long">
+		UPDATE image
+		SET del_yn = 'Y'
+		WHERE id = #{value}
+	</update>
+
+	<update id="deletePost" parameterType="Long">
+		UPDATE post
+		SET del_yn = 'Y'
+		WHERE id = #{value}
+	</update>
+
+	<update id="deletePostImage" parameterType="Long">
+		UPDATE image
+		SET del_yn = 'Y'
+		WHERE post_id = #{value}
+	</update>
+
+	<update id="updatePost" parameterType="com.hangaebal.vo.PostTableVO">
+		UPDATE post
+		SET
+			menu_id = #{menuId}
+			,title = #{title}
+			,year = #{year}
+			,contents = #{contents}
+		WHERE id = #{id}
+	</update>
+
+
 </mapper>

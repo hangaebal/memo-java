@@ -1,19 +1,13 @@
 package com.hangaebal.vo;
 
-import java.io.Serializable;
-
 /**
- * Created by hcs on 2017. 1. 6..
+ * Created by hcs on 2017. 2. 16..
  */
-public class MenuTableVO implements Serializable {
+public class MenuTableVO {
 	private Long id;
-	private Long parentId;
 	private Long seq;
-	private String name;
-	private String shortcut;
-	private String url;
-	private String lineYn;
-	private String disableYn;
+	private String title;
+	private String path;
 	private String delYn;
 
 	public Long getId() {
@@ -24,14 +18,6 @@ public class MenuTableVO implements Serializable {
 		this.id = id;
 	}
 
-	public Long getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
-
 	public Long getSeq() {
 		return seq;
 	}
@@ -40,44 +26,20 @@ public class MenuTableVO implements Serializable {
 		this.seq = seq;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getShortcut() {
-		return shortcut;
+	public String getPath() {
+		return path;
 	}
 
-	public void setShortcut(String shortcut) {
-		this.shortcut = shortcut;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public String getLineYn() {
-		return lineYn;
-	}
-
-	public void setLineYn(String lineYn) {
-		this.lineYn = lineYn;
-	}
-
-	public String getDisableYn() {
-		return disableYn;
-	}
-
-	public void setDisableYn(String disableYn) {
-		this.disableYn = disableYn;
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public String getDelYn() {

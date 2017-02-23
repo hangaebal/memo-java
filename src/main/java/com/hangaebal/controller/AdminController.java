@@ -2,7 +2,8 @@ package com.hangaebal.controller;
 
 import com.hangaebal.service.AdminService;
 import com.hangaebal.vo.ImageTableVO;
-import com.hangaebal.vo.MenuVO;
+import com.hangaebal.vo.MenuTableVO;
+import com.hangaebal.vo.PostTableVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -38,9 +39,9 @@ public class AdminController {
 	@RequestMapping(value = "/menu", method = RequestMethod.GET)
 	public ModelAndView menuList() {
 
-		List<MenuVO> menuList = adminService.selectMenuList();
-
 		ModelAndView mav = new ModelAndView("admin/menu");
+
+		List<MenuTableVO> menuList = adminService.selectMenuList();
 		mav.addObject("menuList", menuList);
 
 		return mav;
@@ -52,10 +53,10 @@ public class AdminController {
 			,@RequestParam("title") List<String> titleList
 			,@RequestParam("path") List<String> pathList
 	) {
-		List<MenuVO> menuList = new ArrayList<>();
+		List<MenuTableVO> menuList = new ArrayList<>();
 
 		for (int i = 0; i < titleList.size(); i++) {
-			MenuVO menuVo = new MenuVO();
+			MenuTableVO menuVo = new MenuTableVO();
 			if (idList.size() > i) {
 				menuVo.setId(idList.get(i));
 			}
@@ -63,10 +64,6 @@ public class AdminController {
 			menuVo.setTitle(titleList.get(i));
 			menuVo.setPath(pathList.get(i));
 			menuList.add(menuVo);
-		}
-
-		for (MenuVO menuVO : menuList) {
-			System.out.println("id:"+menuVO.getId()+" seq:"+menuVO.getSeq()+" title:"+menuVO.getTitle()+" path:"+menuVO.getPath());
 		}
 
 		adminService.updateMenu(menuList);
@@ -82,44 +79,76 @@ public class AdminController {
 
 
 	@RequestMapping(value = "/post", method = RequestMethod.GET)
-	public ModelAndView postList() {
-
-		//List<MenuVO> postList = adminService.selectPostList();
+	public ModelAndView postList(@RequestParam(required = false) Long menuId) {
 
 		ModelAndView mav = new ModelAndView("admin/post/list");
-		//mav.addObject("postList", postList);
+
+		List<MenuTableVO> menuList = adminService.selectMenuList();
+		List<PostTableVO> postList = adminService.selectPostList(menuId);
+
+		mav.addObject("menuList", menuList);
+		mav.addObject("postList", postList);
 
 		return mav;
 	}
 
 	@RequestMapping(value = "/post/create", method = RequestMethod.GET)
-	public ModelAndView postCreate() {
-		System.out.println(UPLOAD_DERECTORY);
-
-		List<MenuVO> menuList = adminService.selectMenuList();
+	public ModelAndView postCreateView(@RequestParam(required = false) Long menuId) {
 
 		ModelAndView mav = new ModelAndView("admin/post/create");
+
+		List<MenuTableVO> menuList = adminService.selectMenuList();
 		mav.addObject("menuList", menuList);
+		mav.addObject("menuId", menuId);
 
 		return mav;
 	}
 
+	@RequestMapping(value = "/post", method = RequestMethod.POST)
+	public String postCreate(
+			@ModelAttribute PostTableVO postTableVO
+			,@RequestParam(value = "imgId", required = false) List<Long> imgIdList
+	) {
+		// 포스트 등록
+		adminService.insertPost(postTableVO);
+
+		// 미디어 등록
+		if (imgIdList != null) {
+			Long postId = postTableVO.getId();
+			ImageTableVO imageTableVO;
+			Long seq = 0L;
+			for (Long imgId : imgIdList) {
+				imageTableVO = new ImageTableVO();
+				imageTableVO.setId(imgId);
+				imageTableVO.setSeq(++seq);
+				imageTableVO.setPostId(postId);
+
+				adminService.updateImage(imageTableVO);
+			}
+		}
+
+		// 해당 포스트가 속한 메뉴의 포스트 리스트 페이지로 리다이렉트
+		return "redirect:/admin/post?menuId=" + postTableVO.getMenuId();
+	}
+
 	@RequestMapping(value = "/post/image", method = RequestMethod.POST)
 	public @ResponseBody Map imageUpload(
-			@RequestParam("imgTitle") String imgTitle
-			,@RequestParam("imgFile") MultipartFile imgFile
+			@RequestParam("type") String type
+			,@RequestParam("mFile") MultipartFile multipartFile
+			,@RequestParam(value = "imgTitle", required = false) String imgTitle
 	) {
 		Map<String, Object> returnMap = new HashMap<>();
-		if (imgFile.isEmpty()) {
+		if (multipartFile.isEmpty()) {
 			returnMap.put("status","error");
 			return returnMap;
 		}
 
-		String extension = imgFile.getOriginalFilename().substring(imgFile.getOriginalFilename().lastIndexOf("."));
+		String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
 		String saveFileName = UUID.randomUUID().toString().replace("-", "")  + extension;
-		Path path = Paths.get(UPLOAD_DERECTORY + File.separator + "image" + File.separator + saveFileName);
+		Path path = Paths.get(UPLOAD_DERECTORY + File.separator + type + File.separator + saveFileName);
 		try {
-			Files.write(path, imgFile.getBytes());
+			Files.createDirectories(path.getParent());
+			Files.write(path, multipartFile.getBytes());
 		} catch (IOException e) {
 			e.printStackTrace();
 			returnMap.put("status","error");
@@ -128,18 +157,98 @@ public class AdminController {
 
 		ImageTableVO imageTableVO = new ImageTableVO();
 		imageTableVO.setTitle(imgTitle);
-		imageTableVO.setPath("image" + File.separator + saveFileName);
+		imageTableVO.setPath(type + File.separator + saveFileName);
 
 		adminService.insertImage(imageTableVO);
-		System.out.println("imageTableVO.getId() : " + imageTableVO.getId());
 
 		returnMap.put("status", "success");
 		returnMap.put("id", imageTableVO.getId());
 		returnMap.put("path", imageTableVO.getPath());
-		returnMap.put("title", imageTableVO.getTitle());
-
-
+		if ("image".equals(type)) {
+			returnMap.put("title", imageTableVO.getTitle());
+		}
 
 		return returnMap;
 	}
+
+	@RequestMapping(value = "/post/image/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody String deleteImage(@PathVariable("id") Long id) {
+		adminService.deleteImage(id);
+		return "success";
+	}
+
+	@RequestMapping(value = "/post/seq", method = RequestMethod.POST)
+	public @ResponseBody String postSeq(@RequestParam("id") List<Long> idList) {
+		Long seq = 0L;
+		PostTableVO postTableVO;
+		for (Long id : idList) {
+			postTableVO = new PostTableVO();
+			postTableVO.setId(id);
+			postTableVO.setSeq(++seq);
+
+			adminService.updatePostSeq(postTableVO);
+		}
+
+		return "success";
+	}
+
+	@RequestMapping(value = "/post/{id}", method = RequestMethod.DELETE)
+	public @ResponseBody String deletePost(@PathVariable("id") Long id) {
+		PostTableVO postTableVO = adminService.selectPostDetail(id);
+		adminService.deletePostImage(id);	// 포스트에 속한 이미지 삭제
+		adminService.deletePost(id);		// 포스트 삭제
+
+		// 해당 포스트가 속한 메뉴의 포스트 리스트 페이지로 리다이렉트
+		return "/admin/post?menuId=" + postTableVO.getMenuId();
+	}
+
+	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView postEditView(@PathVariable("id") Long id) {
+
+		ModelAndView mav = new ModelAndView("admin/post/edit");
+
+		PostTableVO post = adminService.selectPostDetail(id);
+		List<MenuTableVO> menuList = adminService.selectMenuList();
+
+		mav.addObject("post", post);
+		mav.addObject("menuList", menuList);
+
+		if (!"text".equals(post.getType())) {
+			List<ImageTableVO> imageList = adminService.selectPostImageList(id);
+			mav.addObject("imageList", imageList);
+		}
+
+		return mav;
+	}
+
+	@RequestMapping(value = "/post/edit", method = RequestMethod.POST)
+	public String postEdit(
+			@ModelAttribute PostTableVO postTableVO
+			,@RequestParam(value = "imgId", required = false) List<Long> imgIdList
+	) {
+		// 포스트 수정
+		adminService.updatePost(postTableVO);
+
+		// 미디어 등록
+		if (imgIdList != null) {
+			Long postId = postTableVO.getId();
+			ImageTableVO imageTableVO;
+			Long seq = 0L;
+			for (Long imgId : imgIdList) {
+				imageTableVO = new ImageTableVO();
+				imageTableVO.setId(imgId);
+				imageTableVO.setSeq(++seq);
+				imageTableVO.setPostId(postId);
+
+				adminService.updateImage(imageTableVO);
+			}
+		}
+
+		// 해당 포스트가 속한 메뉴의 포스트 리스트 페이지로 리다이렉트
+		return "redirect:/admin/post?menuId=" + postTableVO.getMenuId();
+	}
+
+
+
+
 }

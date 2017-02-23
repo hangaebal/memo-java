@@ -2,7 +2,7 @@ package com.hangaebal.service.impl;
 
 import com.hangaebal.dao.MainDAO;
 import com.hangaebal.service.MainService;
-import com.hangaebal.vo.MenuTableVO;
+import com.hangaebal.vo.MenuTableVO_old;
 import com.hangaebal.vo.root.MainMenuVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +21,7 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<MenuTableVO> selectSubMenu() {
+	public List<MenuTableVO_old> selectSubMenu() {
 		return mainDAO.selectSubMenu();
 	}
 }

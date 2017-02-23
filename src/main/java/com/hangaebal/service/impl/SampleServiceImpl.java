@@ -2,7 +2,7 @@ package com.hangaebal.service.impl;
 
 import com.hangaebal.dao.SampleDAO;
 import com.hangaebal.service.SampleService;
-import com.hangaebal.vo.MenuTableVO;
+import com.hangaebal.vo.MenuTableVO_old;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ public class SampleServiceImpl implements SampleService {
 	SampleDAO sampleDAO;
 
 	@Override
-	public List<MenuTableVO> selectMemoList() {
+	public List<MenuTableVO_old> selectMemoList() {
 		return sampleDAO.selectMemoList();
 	}
 }

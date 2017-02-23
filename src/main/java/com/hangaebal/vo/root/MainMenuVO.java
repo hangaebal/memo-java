@@ -1,13 +1,13 @@
 package com.hangaebal.vo.root;
 
-import com.hangaebal.vo.MenuTableVO;
+import com.hangaebal.vo.MenuTableVO_old;
 
 import java.io.Serializable;
 
 /**
  * Created by hcs on 2017. 1. 6..
  */
-public class MainMenuVO extends MenuTableVO implements Serializable {
+public class MainMenuVO extends MenuTableVO_old implements Serializable {
 
 	private String hasShortcut;
 

@@ -1,7 +1,8 @@
 package com.hangaebal.dao;
 
 import com.hangaebal.vo.ImageTableVO;
-import com.hangaebal.vo.MenuVO;
+import com.hangaebal.vo.MenuTableVO;
+import com.hangaebal.vo.PostTableVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -16,12 +17,12 @@ public class AdminDAO {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
-	public List<MenuVO> selectMenuList() {
+	public List<MenuTableVO> selectMenuList() {
 		return sqlSessionTemplate.selectList("selectMenuList");
 	}
 
-	public void updateMenu(List<MenuVO> menuList) {
-		for (MenuVO menuVO : menuList) {
+	public void updateMenu(List<MenuTableVO> menuList) {
+		for (MenuTableVO menuVO : menuList) {
 			if (menuVO.getId() == null) {
 				sqlSessionTemplate.insert("insertMenu", menuVO);
 			} else {
@@ -36,5 +37,45 @@ public class AdminDAO {
 
 	public void insertImage(ImageTableVO imageTableVO) {
 		sqlSessionTemplate.insert("insertImage", imageTableVO);
+	}
+
+	public void insertPost(PostTableVO postTableVO) {
+		sqlSessionTemplate.insert("insertPost", postTableVO);
+	}
+
+	public void updateImage(ImageTableVO imageTableVO) {
+		sqlSessionTemplate.update("updateImage", imageTableVO);
+	}
+
+	public List<PostTableVO> selectPostList(Long menuId) {
+		return sqlSessionTemplate.selectList("selectPostList", menuId);
+	}
+
+	public void updatePostSeq(PostTableVO postTableVO) {
+		sqlSessionTemplate.update("updatePostSeq", postTableVO);
+	}
+
+	public PostTableVO selectPostDetail(Long id) {
+		return sqlSessionTemplate.selectOne("selectPostDetail", id);
+	}
+
+	public List<ImageTableVO> selectPostImageList(Long id) {
+		return sqlSessionTemplate.selectList("selectPostImageList", id);
+	}
+
+	public void deleteImage(Long id) {
+		sqlSessionTemplate.update("deleteImage", id);
+	}
+
+	public void deletePost(Long id) {
+		sqlSessionTemplate.update("deletePost", id);
+	}
+
+	public void deletePostImage(Long id) {
+		sqlSessionTemplate.update("deletePostImage", id);
+	}
+
+	public void updatePost(PostTableVO postTableVO) {
+		sqlSessionTemplate.update("updatePost", postTableVO);
 	}
 }

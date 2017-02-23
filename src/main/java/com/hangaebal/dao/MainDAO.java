@@ -1,6 +1,6 @@
 package com.hangaebal.dao;
 
-import com.hangaebal.vo.MenuTableVO;
+import com.hangaebal.vo.MenuTableVO_old;
 import com.hangaebal.vo.root.MainMenuVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class MainDAO {
 	}
 
 	@Cacheable(value = "subMenuCache")
-	public List<MenuTableVO> selectSubMenu() {
+	public List<MenuTableVO_old> selectSubMenu() {
 		return sqlSessionTemplate.selectList("selectSubMenu");
 	}
 }
