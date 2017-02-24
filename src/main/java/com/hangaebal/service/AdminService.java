@@ -23,7 +23,7 @@ public interface AdminService {
 
 	void updateImage(ImageTableVO imageTableVO);
 
-	List<PostTableVO> selectPostList(Long menuId);
+	List<PostTableVO> selectMenuPostList(Long menuId);
 
 	void updatePostSeq(PostTableVO postTableVO);
 

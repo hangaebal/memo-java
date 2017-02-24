@@ -1,11 +1,12 @@
 package com.hangaebal.service;
 
-import com.hangaebal.vo.MenuTableVO_old;
-import com.hangaebal.vo.root.MainMenuVO;
+import com.hangaebal.vo.PostTableVO;
+import com.hangaebal.vo.dto.MenuDTO;
 
 import java.util.List;
 
 public interface MainService {
-	List<MainMenuVO> selectMainMenu();
-	List<MenuTableVO_old> selectSubMenu();
+	List<MenuDTO> selectMenuList();
+
+	List<PostTableVO> selectPostList();
 }

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="/js/jquery.form.min.js"></script>
 <style>
 	#previewDiv {min-height: 300px;}
 	#previewDiv:after {content:"";display:block; clear: both;}

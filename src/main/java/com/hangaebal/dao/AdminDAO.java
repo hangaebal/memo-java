@@ -47,8 +47,8 @@ public class AdminDAO {
 		sqlSessionTemplate.update("updateImage", imageTableVO);
 	}
 
-	public List<PostTableVO> selectPostList(Long menuId) {
-		return sqlSessionTemplate.selectList("selectPostList", menuId);
+	public List<PostTableVO> selectMenuPostList(Long menuId) {
+		return sqlSessionTemplate.selectList("selectMenuPostList", menuId);
 	}
 
 	public void updatePostSeq(PostTableVO postTableVO) {

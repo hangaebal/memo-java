@@ -84,7 +84,7 @@ public class AdminController {
 		ModelAndView mav = new ModelAndView("admin/post/list");
 
 		List<MenuTableVO> menuList = adminService.selectMenuList();
-		List<PostTableVO> postList = adminService.selectPostList(menuId);
+		List<PostTableVO> postList = adminService.selectMenuPostList(menuId);
 
 		mav.addObject("menuList", menuList);
 		mav.addObject("postList", postList);

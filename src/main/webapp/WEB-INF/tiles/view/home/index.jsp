@@ -1,3 +1,3 @@
-${mainMenuList.size()}<br>
-${subMenuList.size()}<br>
-<p>testestest</p>
+<p>index</p>
+menuList.size(): ${menuList.size()}<br>
+postList.size(): ${postList.size()}<br>

@@ -9,8 +9,8 @@
 	<title><tiles:getAsString name="title" /></title>
 	<link rel="stylesheet" href="/css/normalize.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/js/jquery-3.1.1.min.js"></script>
+	<script src="/js/jquery-ui.min.js"></script>
 </head>
 <body>
 <section class="container">

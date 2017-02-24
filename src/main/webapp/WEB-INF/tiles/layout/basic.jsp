@@ -5,38 +5,31 @@
 <head>
 	<meta charset="UTF-8">
 	<title><tiles:getAsString name="title" /></title>
-	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/main.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<link rel="stylesheet" href="/css/normalize.css">
+	<link rel="stylesheet" href="/css/main.css">
+	<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>--%>
+	<script src="/js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 <section>
 	<header>
-		<img id="iconImg" alt="아이콘" src="img/icon.png">
+		<img id="iconImg" alt="아이콘" src="/img/icon.png">
 		<p>제목 없음 - 메모장</p>
 	</header>
 	<nav>
 
 		<ul id="mainMenuUl">
-			<c:forEach items="${mainMenuList}" var="mainMenu">
+			<c:forEach items="${menuList}" var="menu">
 				<li class="mainMenu">
-					<p>${mainMenu.name}</p>
-					<ul class="subMenuUl ${mainMenu.hasShortcut == 'y'?'widthShortCut':''}">
-						<c:forEach items="${subMenuList}" var="subMenu">
-							<c:if test="${mainMenu.id == subMenu.parentId}">
-								<c:choose>
-									<c:when test="${subMenu.lineYn == 'y'}">
-										<li class="line">
-									</c:when>
-									<c:otherwise>
-										<li class="subMenu">
-											<a href="${subMenu.url}">
-												<p>${subMenu.name} <span>${subMenu.shortcut}</span></p>
-											</a>
-
-										</li>
-									</c:otherwise>
-								</c:choose>
+					<p>${menu.title}</p>
+					<ul class="subMenuUl ${menu.hasYear == 'Y'?'widthShortCut':''}">
+						<c:forEach items="${postList}" var="post">
+							<c:if test="${menu.id == post.menuId}">
+								<li class="subMenu">
+									<a href="/post/${post.id}">
+										<p>${post.title} <span>${post.year}</span></p>
+									</a>
+								</li>
 							</c:if>
 						</c:forEach>
 					</ul>

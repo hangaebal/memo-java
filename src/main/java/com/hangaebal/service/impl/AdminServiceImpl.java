@@ -50,8 +50,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<PostTableVO> selectPostList(Long menuId) {
-		return adminDAO.selectPostList(menuId);
+	public List<PostTableVO> selectMenuPostList(Long menuId) {
+		return adminDAO.selectMenuPostList(menuId);
 	}
 
 	@Override

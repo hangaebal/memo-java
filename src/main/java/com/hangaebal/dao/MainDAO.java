@@ -1,10 +1,9 @@
 package com.hangaebal.dao;
 
-import com.hangaebal.vo.MenuTableVO_old;
-import com.hangaebal.vo.root.MainMenuVO;
+import com.hangaebal.vo.PostTableVO;
+import com.hangaebal.vo.dto.MenuDTO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,13 +13,14 @@ public class MainDAO {
 	@Autowired
 	SqlSessionTemplate sqlSessionTemplate;
 
-	@Cacheable(value = "mainMenuCache")
-	public List<MainMenuVO> selectMainMenu() {
-		return sqlSessionTemplate.selectList("selectMainMenu");
+	public List<MenuDTO> selectMenuList() {
+		return sqlSessionTemplate.selectList("selectMainMenuList");
 	}
 
-	@Cacheable(value = "subMenuCache")
-	public List<MenuTableVO_old> selectSubMenu() {
-		return sqlSessionTemplate.selectList("selectSubMenu");
+	//@Cacheable(value = "mainMenuCache")
+	public List<PostTableVO> selectPostList() {
+		return sqlSessionTemplate.selectList("selectMainPostList");
 	}
+
+
 }

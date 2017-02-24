@@ -8,9 +8,7 @@
 
 	<definition name="layout.basic" template="/WEB-INF/tiles/layout/basic.jsp">
 		<put-attribute name="title" value="" />
-		<put-attribute name="header" value="/WEB-INF/tiles/view/header.jsp" />
 		<put-attribute name="body" value="" />
-		<put-attribute name="footer" value="/WEB-INF/tiles/view/footer.jsp" />
 	</definition>
 
 	<definition name="layout.admin" template="/WEB-INF/tiles/layout/admin.jsp">
@@ -18,18 +16,12 @@
 		<put-attribute name="body" value="" />
 	</definition>
 
-	<!-- Pages -->
-
-	<definition name="site.homepage" extends="layout.basic">
-		<put-attribute name="body" value="/WEB-INF/tiles/view/home/home.jsp" />
+	<!-- HOME -->
+	<definition name="home/*" extends="layout.basic">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/home/{1}.jsp" />
 	</definition>
-
-	<definition name="site.greeting" extends="layout.basic">
-		<put-attribute name="body" value="/WEB-INF/tiles/view/home/greeting.jsp" />
-	</definition>
-
-	<definition name="home.index" extends="layout.basic">
-		<put-attribute name="body" value="/WEB-INF/tiles/view/home/index.jsp" />
+	<definition name="home/*/*" extends="layout.basic">
+		<put-attribute name="body" value="/WEB-INF/tiles/view/home/{1}/{2}.jsp" />
 	</definition>
 
 	<!-- 관리자 -->
