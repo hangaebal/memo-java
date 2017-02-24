@@ -1,10 +1,10 @@
 /* ========== borders ==========*/
 html:before,html:after,body:before,body:after{
+	z-index:99;
 	content:"";
 	display:block;
 	position:fixed;
 	background:#bad2ea;
-	z-index:99;
 
 	border: 1px solid #343434;
 }
@@ -56,6 +56,7 @@ body {
 
 /* ========== header ==========*/
 header {
+	z-index:99;
 	display: block;
 	position: fixed;
 	top: 11px;
@@ -150,5 +151,6 @@ header {
 
 /* ========== article ========== */
 section {
-	height: 1500px;
+	margin: 42px 2px 50px;
+	min-height: 800px;
 }
