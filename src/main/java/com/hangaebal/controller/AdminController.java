@@ -49,20 +49,20 @@ public class AdminController {
 
 	@RequestMapping(value = "/menu", method = RequestMethod.POST)
 	public String updateMenu(
-			@RequestParam("id") List<Long> idList
+			@RequestParam(value = "id", required = false) List<Long> idList
 			,@RequestParam("title") List<String> titleList
-			,@RequestParam("path") List<String> pathList
+			//,@RequestParam("path") List<String> pathList
 	) {
 		List<MenuTableVO> menuList = new ArrayList<>();
 
 		for (int i = 0; i < titleList.size(); i++) {
 			MenuTableVO menuVo = new MenuTableVO();
-			if (idList.size() > i) {
+			if (idList != null && idList.size() > i) {
 				menuVo.setId(idList.get(i));
 			}
 			menuVo.setSeq(i + 1L);
 			menuVo.setTitle(titleList.get(i));
-			menuVo.setPath(pathList.get(i));
+			//menuVo.setPath(pathList.get(i));
 			menuList.add(menuVo);
 		}
 
@@ -157,7 +157,7 @@ public class AdminController {
 
 		ImageTableVO imageTableVO = new ImageTableVO();
 		imageTableVO.setTitle(imgTitle);
-		imageTableVO.setPath(type + File.separator + saveFileName);
+		imageTableVO.setPath(type + "/" + saveFileName);
 
 		adminService.insertImage(imageTableVO);
 

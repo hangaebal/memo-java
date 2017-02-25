@@ -11,14 +11,14 @@
 		<colgroup>
 			<col width="10%">
 			<col width="">
-			<col width="">
+			<%--<col width="">--%>
 			<col width="">
 		</colgroup>
 		<thead>
 		<tr>
 			<th>드래그</th>
 			<th>제목</th>
-			<th>경로(영문)</th>
+			<%--<th>경로(영문)</th>--%>
 			<th>삭제</th>
 		</tr>
 		</thead>
@@ -30,7 +30,7 @@
 					<span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span>
 				</td>
 				<td><input class="form-control" type="text" name="title" value="${menu.title}" required></td>
-				<td><input class="form-control" type="text" name="path" value="${menu.path}" required></td>
+				<%--<td><input class="form-control" type="text" name="path" value="${menu.path}" required></td>--%>
 				<td><button type="button" class="btn btn-danger" onclick="deleteRow(event, ${menu.id})">삭제</button></td>
 			</tr>
 		</c:forEach>
@@ -77,7 +77,7 @@
 		var rowTag = '<tr>'
 			+ '<td class="cursor"><span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span></td>'
 			+ '<td><input class="form-control" type="text" name="title" required></td>'
-			+ '<td><input class="form-control" type="text" name="path" required></td>'
+			//+ '<td><input class="form-control" type="text" name="path" required></td>'
 			+ '<td><button type="button" class="btn btn-danger" onclick="deleteRow(event)">삭제</button></td>'
 			+ '</tr>';
 		$('#menuTable').append(rowTag);
@@ -93,13 +93,13 @@
 				isValid = false;
 				return false;
 			}
-			$input = $(this).find('input[name="path"]');
+			/*$input = $(this).find('input[name="path"]');
 			if ($.trim($input.val()) == "") {
 				$input.focus();
 				alert('필수 항목이 비어있습니다.');
 				isValid = false;
 				return false;
-			}
+			}*/
 
 		});
 
