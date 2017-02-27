@@ -6,9 +6,7 @@
 	<meta charset="UTF-8">
 	<title><tiles:getAsString name="title" /></title>
 	<link rel="stylesheet" href="/css/normalize.css">
-	<link rel="stylesheet" href="/css/jquery.fancybox.min.css">
 	<link rel="stylesheet" href="/css/main.css">
-	<%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>--%>
 	<script src="/js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
@@ -41,6 +39,10 @@
 	<section>
 		<tiles:insertAttribute name="body" />
 	</section>
+
+	<div id="modalBg" class="modal"></div>
+	<img id="modalImg" class="modal">
+
 <script type="text/javascript">
 	// 메인 메뉴 클릭시 서브 메뉴 오픈
 	$('.mainMenu').click(function(e){

@@ -114,7 +114,7 @@ $(function(){
 		success: function(data, statusText){
 			var previewTag = '<div class="previewItem">'
 					+'<input type="hidden" name="imgId" value="'+data.id+'">'
-					+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event)"></span> '+data.title+'</p>'
+					+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event)"></span> '+data.title+'</p>'
 					+'<img src="/upload/'+data.path+'">'
 					+'</div>';
 			$('#previewDiv').append(previewTag);
@@ -140,7 +140,7 @@ $(function(){
 		success: function(data, statusText){
 			var previewTag = '<div class="previewItem">'
 				+'<input type="hidden" name="imgId" value="'+data.id+'">'
-				+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event)"></span></p>'
+				+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event)"></span></p>'
 				+'<video src="/upload/'+data.path+'" controls width="300"/>'
 				+'</div>';
 			$('#previewDiv').html(previewTag);

@@ -34,12 +34,13 @@ public class MenuInterceptor extends HandlerInterceptorAdapter {
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mav) throws Exception {
 		logger.info("============= postHandle ============");
 
-		List<MenuDTO> menuList = mainService.selectMenuList();
-		List<PostTableVO> postList = mainService.selectPostList();
+		if (!request.getRequestURI().contains("admin") && mav != null) {
+			List<MenuDTO> menuList = mainService.selectMenuList();
+			List<PostTableVO> postList = mainService.selectPostList();
 
-		mav.addObject("menuList", menuList);
-		mav.addObject("postList", postList);
-
+			mav.addObject("menuList", menuList);
+			mav.addObject("postList", postList);
+		}
 	}
 
 }

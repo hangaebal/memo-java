@@ -2,19 +2,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:set var="newline" value="<%='\n'%>" />
-<script src="/js/jquery.fancybox.min.js"></script>
-<style>
-	#postArticle {/*display: inline-block; width: 100%;*/}
-	#postArticle:after {
-		content: " ";
-		display: block;
-		height: 0;
-		clear: both;
-	}
-	.imageItem {float: left; width: 30%; margin-left: 2.5%;}
-	.imageItem p { width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-	.imageItem img { width: 100%;}
-</style>
 <article id="postArticle">
 <c:choose>
 	<c:when test="${post.type eq 'text'}">
@@ -28,9 +15,7 @@
 		<c:forEach items="${imageList}" var="image">
 			<div class="imageItem">
 				<p>${image.title}</p>
-				<a href="/upload/${image.path}" data-fancybox="postImages" data-caption="${image.title}">
-					<img src="/upload/${image.path}">
-				</a>
+				<img src="/upload/${image.path}" class="modalOpen">
 			</div>
 		</c:forEach>
 	</c:when>
@@ -38,5 +23,37 @@
 </article>
 
 <script>
+	$(function(){
+		$('.modalOpen').click(function(e){
+			e.preventDefault();
+
+			$('#modalImg').attr('src', $(e.target).attr('src'));
+			$('#modalImg').one('load', function() {
+				modalToCenter();
+
+				$('#modalBg').show();
+				$('#modalImg').show();
+			});
+		});
+
+		$('.modal').click(function(){
+			$('#modalImg').hide();
+			$('#modalBg').hide();
+			$('#modalImg').removeAttr('src');
+		});
+
+		$(window).on('resize', function() {
+			modalToCenter();
+		});
+	});
+
+	function modalToCenter() {
+		var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+		var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+		$('#modalImg').css('top', (height-$('#modalImg').outerHeight())/2 + 'px');
+		$('#modalImg').css('left', (width-$('#modalImg').outerWidth())/2 + 'px');
+	}
+
 
 </script>
