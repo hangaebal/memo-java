@@ -33,6 +33,11 @@ public class RootController {
 		this.cacheManager = cacheManager;
 	}
 
+	@RequestMapping("/admin")
+	public String admin() {
+		return "redirect:/admin/";
+	}
+
 	@RequestMapping("/")
 	public String index() {
 		logger.info("\n\n" + "=========================================================\n"
