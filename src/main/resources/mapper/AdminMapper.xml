@@ -37,15 +37,33 @@
 		WHERE id = #{id}
 	</update>
 
-	<insert id="insertImage" parameterType="com.hangaebal.vo.ImageTableVO" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO image (
-			title
-			,path
-		) VALUES (
-			#{title}
-			,#{path}
-		)
-	</insert>
+	<select id="selectMenuPostList" parameterType="Long" resultType="com.hangaebal.vo.PostTableVO">
+		SELECT *
+		FROM post
+		<choose>
+			<when test="value == null">
+				WHERE menu_id = (SELECT id FROM menu ORDER BY seq LIMIT 1)
+			</when>
+			<otherwise>
+				WHERE menu_id = #{value}
+			</otherwise>
+		</choose>
+		AND del_yn = 'N'
+		ORDER by seq
+	</select>
+
+	<select id="selectPostDetail" parameterType="Long" resultType="com.hangaebal.vo.PostTableVO">
+		SELECT *
+		FROM post
+		WHERE id = #{value}
+		AND del_yn = 'N'
+	</select>
+
+	<update id="updatePostSeq" parameterType="com.hangaebal.vo.PostTableVO">
+		UPDATE post
+		SET seq = #{seq}
+		WHERE id = #{id}
+	</update>
 
 	<insert id="insertPost" parameterType="com.hangaebal.vo.PostTableVO" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO post (
@@ -65,69 +83,6 @@
 		)
 	</insert>
 
-	<update id="updateImage" parameterType="com.hangaebal.vo.ImageTableVO">
-		UPDATE image
-		SET
-			post_id = #{postId}
-			,seq = #{seq}
-		WHERE
-			id = #{id}
-	</update>
-
-	<select id="selectMenuPostList" parameterType="Long" resultType="com.hangaebal.vo.PostTableVO">
-		SELECT *
-		FROM post
-		<choose>
-			<when test="value == null">
-				WHERE menu_id = (SELECT id FROM menu ORDER BY seq LIMIT 1)
-			</when>
-			<otherwise>
-				WHERE menu_id = #{value}
-			</otherwise>
-		</choose>
-		AND del_yn = 'N'
-		ORDER by seq
-	</select>
-
-	<update id="updatePostSeq" parameterType="com.hangaebal.vo.PostTableVO">
-		UPDATE post
-		SET seq = #{seq}
-		WHERE id = #{id}
-	</update>
-
-	<select id="selectPostDetail" parameterType="Long" resultType="com.hangaebal.vo.PostTableVO">
-		SELECT *
-		FROM post
-		WHERE id = #{value}
-		AND del_yn = 'N'
-	</select>
-
-	<select id="selectPostImageList" parameterType="Long" resultType="com.hangaebal.vo.ImageTableVO">
-		SELECT *
-		FROM image
-		WHERE post_id = #{value}
-		AND del_yn = 'N'
-		ORDER BY seq
-	</select>
-
-	<update id="deleteImage" parameterType="Long">
-		UPDATE image
-		SET del_yn = 'Y'
-		WHERE id = #{value}
-	</update>
-
-	<update id="deletePost" parameterType="Long">
-		UPDATE post
-		SET del_yn = 'Y'
-		WHERE id = #{value}
-	</update>
-
-	<update id="deletePostImage" parameterType="Long">
-		UPDATE image
-		SET del_yn = 'Y'
-		WHERE post_id = #{value}
-	</update>
-
 	<update id="updatePost" parameterType="com.hangaebal.vo.PostTableVO">
 		UPDATE post
 		SET
@@ -138,5 +93,50 @@
 		WHERE id = #{id}
 	</update>
 
+	<update id="deletePost" parameterType="Long">
+		UPDATE post
+		SET del_yn = 'Y'
+		WHERE id = #{value}
+	</update>
+
+	<insert id="insertImage" parameterType="com.hangaebal.vo.ImageTableVO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO image (
+			title
+			,path
+		) VALUES (
+			#{title}
+			,#{path}
+		)
+	</insert>
+
+	<update id="updateImage" parameterType="com.hangaebal.vo.ImageTableVO">
+		UPDATE image
+		SET
+			post_id = #{postId}
+			,seq = #{seq}
+		WHERE
+			id = #{id}
+	</update>
+
+	<select id="selectPostImageList" parameterType="Long" resultType="com.hangaebal.vo.ImageTableVO">
+		SELECT *
+		FROM image
+		WHERE
+			post_id = #{value}
+			AND del_yn = 'N'
+		ORDER BY seq
+	</select>
+
+	<update id="deleteImage" parameterType="Long">
+		UPDATE image
+		SET del_yn = 'Y'
+		WHERE id = #{value}
+	</update>
+
+	<update id="deletePostImage" parameterType="Long">
+		UPDATE image
+		SET del_yn = 'Y'
+		WHERE post_id = #{value}
+	</update>
 
 </mapper>

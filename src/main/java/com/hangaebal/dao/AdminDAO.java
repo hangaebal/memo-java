@@ -5,6 +5,7 @@ import com.hangaebal.vo.MenuTableVO;
 import com.hangaebal.vo.PostTableVO;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class AdminDAO {
 		return sqlSessionTemplate.selectList("selectMenuList");
 	}
 
+	@CacheEvict(value = "menuListCache", allEntries = true)
 	public void updateMenu(List<MenuTableVO> menuList) {
 		for (MenuTableVO menuVO : menuList) {
 			if (menuVO.getId() == null) {
@@ -31,28 +33,13 @@ public class AdminDAO {
 		}
 	}
 
+	@CacheEvict(value = "menuListCache", allEntries = true)
 	public void deleteMenu(Long id) {
 		sqlSessionTemplate.update("deleteMenu", id);
 	}
 
-	public void insertImage(ImageTableVO imageTableVO) {
-		sqlSessionTemplate.insert("insertImage", imageTableVO);
-	}
-
-	public void insertPost(PostTableVO postTableVO) {
-		sqlSessionTemplate.insert("insertPost", postTableVO);
-	}
-
-	public void updateImage(ImageTableVO imageTableVO) {
-		sqlSessionTemplate.update("updateImage", imageTableVO);
-	}
-
 	public List<PostTableVO> selectMenuPostList(Long menuId) {
 		return sqlSessionTemplate.selectList("selectMenuPostList", menuId);
-	}
-
-	public void updatePostSeq(PostTableVO postTableVO) {
-		sqlSessionTemplate.update("updatePostSeq", postTableVO);
 	}
 
 	public PostTableVO selectPostDetail(Long id) {
@@ -63,19 +50,40 @@ public class AdminDAO {
 		return sqlSessionTemplate.selectList("selectPostImageList", id);
 	}
 
-	public void deleteImage(Long id) {
-		sqlSessionTemplate.update("deleteImage", id);
+	@CacheEvict(value = "postListCache", allEntries = true)
+	public void updatePostSeq(PostTableVO postTableVO) {
+		sqlSessionTemplate.update("updatePostSeq", postTableVO);
 	}
 
+	@CacheEvict(value = "postListCache", allEntries = true)
+	public void insertPost(PostTableVO postTableVO) {
+		sqlSessionTemplate.insert("insertPost", postTableVO);
+	}
+
+	@CacheEvict(value = "postListCache", allEntries = true)
+	public void updatePost(PostTableVO postTableVO) {
+		sqlSessionTemplate.update("updatePost", postTableVO);
+	}
+
+	@CacheEvict(value = "postListCache", allEntries = true)
 	public void deletePost(Long id) {
 		sqlSessionTemplate.update("deletePost", id);
+	}
+
+	public void insertImage(ImageTableVO imageTableVO) {
+		sqlSessionTemplate.insert("insertImage", imageTableVO);
+	}
+
+	public void updateImage(ImageTableVO imageTableVO) {
+		sqlSessionTemplate.update("updateImage", imageTableVO);
+	}
+
+	public void deleteImage(Long id) {
+		sqlSessionTemplate.update("deleteImage", id);
 	}
 
 	public void deletePostImage(Long id) {
 		sqlSessionTemplate.update("deletePostImage", id);
 	}
 
-	public void updatePost(PostTableVO postTableVO) {
-		sqlSessionTemplate.update("updatePost", postTableVO);
-	}
 }

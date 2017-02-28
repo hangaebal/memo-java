@@ -4,6 +4,7 @@ package com.hangaebal.vo;
  * Created by hcs on 2017. 2. 16..
  */
 public class MenuTableVO {
+
 	private Long id;
 	private Long seq;
 	private String title;

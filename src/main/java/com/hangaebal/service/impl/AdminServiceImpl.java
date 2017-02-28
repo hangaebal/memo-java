@@ -35,28 +35,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void insertImage(ImageTableVO imageTableVO) {
-		adminDAO.insertImage(imageTableVO);
-	}
-
-	@Override
-	public void insertPost(PostTableVO postTableVO) {
-		adminDAO.insertPost(postTableVO);
-	}
-
-	@Override
-	public void updateImage(ImageTableVO imageTableVO) {
-		adminDAO.updateImage(imageTableVO);
-	}
-
-	@Override
 	public List<PostTableVO> selectMenuPostList(Long menuId) {
 		return adminDAO.selectMenuPostList(menuId);
-	}
-
-	@Override
-	public void updatePostSeq(PostTableVO postTableVO) {
-		adminDAO.updatePostSeq(postTableVO);
 	}
 
 	@Override
@@ -65,13 +45,18 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<ImageTableVO> selectPostImageList(Long id) {
-		return adminDAO.selectPostImageList(id);
+	public void updatePostSeq(PostTableVO postTableVO) {
+		adminDAO.updatePostSeq(postTableVO);
 	}
 
 	@Override
-	public void deleteImage(Long id) {
-		adminDAO.deleteImage(id);
+	public void insertPost(PostTableVO postTableVO) {
+		adminDAO.insertPost(postTableVO);
+	}
+
+	@Override
+	public void updatePost(PostTableVO postTableVO) {
+		adminDAO.updatePost(postTableVO);
 	}
 
 	@Override
@@ -80,12 +65,27 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void deletePostImage(Long id) {
-		adminDAO.deletePostImage(id);
+	public List<ImageTableVO> selectPostImageList(Long id) {
+		return adminDAO.selectPostImageList(id);
 	}
 
 	@Override
-	public void updatePost(PostTableVO postTableVO) {
-		adminDAO.updatePost(postTableVO);
+	public void insertImage(ImageTableVO imageTableVO) {
+		adminDAO.insertImage(imageTableVO);
+	}
+
+	@Override
+	public void updateImage(ImageTableVO imageTableVO) {
+		adminDAO.updateImage(imageTableVO);
+	}
+
+	@Override
+	public void deleteImage(Long id) {
+		adminDAO.deleteImage(id);
+	}
+
+	@Override
+	public void deletePostImage(Long id) {
+		adminDAO.deletePostImage(id);
 	}
 }

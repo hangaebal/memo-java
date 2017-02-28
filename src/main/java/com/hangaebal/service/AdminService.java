@@ -17,25 +17,25 @@ public interface AdminService {
 
 	void deleteMenu(Long id);
 
-	void insertImage(ImageTableVO imageTableVO);
-
-	void insertPost(PostTableVO postTableVO);
-
-	void updateImage(ImageTableVO imageTableVO);
-
 	List<PostTableVO> selectMenuPostList(Long menuId);
-
-	void updatePostSeq(PostTableVO postTableVO);
 
 	PostTableVO selectPostDetail(Long id);
 
-	List<ImageTableVO> selectPostImageList(Long id);
+	void updatePostSeq(PostTableVO postTableVO);
 
-	void deleteImage(Long id);
+	void insertPost(PostTableVO postTableVO);
+
+	void updatePost(PostTableVO postTableVO);
 
 	void deletePost(Long id);
 
-	void deletePostImage(Long id);
+	List<ImageTableVO> selectPostImageList(Long id);
 
-	void updatePost(PostTableVO postTableVO);
+	void insertImage(ImageTableVO imageTableVO);
+
+	void updateImage(ImageTableVO imageTableVO);
+
+	void deleteImage(Long id);
+
+	void deletePostImage(Long id);
 }

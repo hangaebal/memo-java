@@ -14,5 +14,4 @@ public class SampleServiceImpl implements SampleService {
 	@Autowired
 	SampleDAO sampleDAO;
 
-
 }

@@ -7,7 +7,6 @@ import com.hangaebal.vo.PostTableVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,13 +25,6 @@ public class RootController {
 	@Autowired
 	AdminService adminService;
 
-
-	private final CacheManager cacheManager;
-
-	public RootController(CacheManager cacheManager) {
-		this.cacheManager = cacheManager;
-	}
-
 	@RequestMapping("/admin")
 	public String admin() {
 		return "redirect:/admin/";
@@ -40,9 +32,6 @@ public class RootController {
 
 	@RequestMapping("/")
 	public String index() {
-		logger.info("\n\n" + "=========================================================\n"
-				+ "Using cache manager: " + this.cacheManager.getClass().getName() + "\n"
-				+ "=========================================================\n\n");
 
 		return "home/index";
 	}
