@@ -8,7 +8,6 @@ public class MenuTableVO {
 	private Long id;
 	private Long seq;
 	private String title;
-	private String path;
 	private String delYn;
 
 	public Long getId() {
@@ -33,14 +32,6 @@ public class MenuTableVO {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String path) {
-		this.path = path;
 	}
 
 	public String getDelYn() {

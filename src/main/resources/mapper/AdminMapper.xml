@@ -13,11 +13,9 @@
 		INSERT INTO menu (
 			seq
 			,title
-			,path
 		) VALUES (
 			#{seq}
 			,#{title}
-			,#{path}
 		)
 	</insert>
 
@@ -26,7 +24,6 @@
 		SET
 			seq = #{seq}
 			,title = #{title}
-			,path = #{path}
 		WHERE
 			id = #{id}
 	</update>
@@ -74,7 +71,7 @@
 			,year
 			,contents
 		) VALUES (
-			(SELECT seq FROM (SELECT  IFNULL(MAX(seq),0) AS seq FROM post WHERE menu_id = 1) p) + 1
+			(SELECT seq FROM (SELECT  IFNULL(MAX(seq),0) AS seq FROM post WHERE menu_id = #{menuId}) p) + 1
 			,#{menuId}
 			,#{type}
 			,#{title}

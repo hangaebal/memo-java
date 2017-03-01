@@ -6,7 +6,7 @@
 
 	<cache name="menuListCache"
 		   maxEntriesLocalHeap="10000"
-		   maxEntriesLocalDisk="1000"
+		   maxEntriesLocalDisk="100000"
 		   eternal="false"
 		   diskSpoolBufferSizeMB="20"
 		   timeToIdleSeconds="86400"
@@ -18,7 +18,7 @@
 
 	<cache name="postListCache"
 		   maxEntriesLocalHeap="10000"
-		   maxEntriesLocalDisk="1000"
+		   maxEntriesLocalDisk="100000"
 		   eternal="false"
 		   diskSpoolBufferSizeMB="20"
 		   timeToIdleSeconds="86400"
