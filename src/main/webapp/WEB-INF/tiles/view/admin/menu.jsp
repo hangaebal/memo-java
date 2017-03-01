@@ -5,7 +5,7 @@
 	.cursor .glyphicon {font-size: 20px; line-height: 33px;}
 </style>
 <div>
-<form id="menuForm" action="/admin/menu" method="post">
+<form id="menuForm" action="${contextPath}/admin/menu" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<table id="menuTable" class="table table-bordered">
 		<colgroup>
@@ -59,7 +59,7 @@
 				var header = $("meta[name='_csrf_header']").attr("content");
 
 				$.ajax({
-					url: '/admin/menu/' + id
+					url: '${contextPath}/admin/menu/' + id
 					,method: 'delete'
 					,beforeSend: function(xhr) {
 						xhr.setRequestHeader(header, token);

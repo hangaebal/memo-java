@@ -1,17 +1,18 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" scope="request"/>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title><tiles:getAsString name="title" /></title>
-	<link rel="stylesheet" href="/css/normalize.css">
-	<link rel="stylesheet" href="/css/main.css">
-	<script src="/js/jquery-3.1.1.min.js"></script>
+	<link rel="stylesheet" href="${contextPath}/css/normalize.css">
+	<link rel="stylesheet" href="${contextPath}/css/main.css">
+	<script src="${contextPath}/js/jquery-3.1.1.min.js"></script>
 </head>
 <body>
 	<header>
-		<img id="iconImg" alt="아이콘" src="/img/icon.png">
+		<img id="iconImg" alt="아이콘" src="${contextPath}/img/icon.png">
 		<p id="headerTitle">제목 없음 - 메모장</p>
 
 		<nav>
@@ -23,7 +24,7 @@
 							<c:forEach items="${postList}" var="post">
 								<c:if test="${menu.id == post.menuId}">
 									<li class="subMenu">
-										<a href="/post/${post.id}">
+										<a href="${contextPath}/post/${post.id}">
 											<p>${post.title} <span>${post.year}</span></p>
 										</a>
 									</li>

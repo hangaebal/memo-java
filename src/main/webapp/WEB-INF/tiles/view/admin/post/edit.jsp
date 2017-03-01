@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="/js/jquery.form.min.js"></script>
+<script src="${contextPath}/js/jquery.form.min.js"></script>
 <style>
 	#previewDiv {min-height: 300px;}
 	#previewDiv:after {content:"";display:block; clear: both;}
@@ -13,7 +13,7 @@
 </style>
 
 <div>
-<form id="postForm" action="/admin/post/edit" method="post">
+<form id="postForm" action="${contextPath}/admin/post/edit" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<input type="hidden" name="id" value="${post.id}"/>
 
@@ -74,14 +74,14 @@
 						<div class="previewItem">
 							<input type="hidden" name="imgId" value="${image.id}">
 							<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event, ${image.id})"></span> ${image.title}</p>
-							<img src="/upload/${image.path}">
+							<img src="${contextPath}/upload/${image.path}">
 						</div>
 					</c:if>
 					<c:if test="${post.type == 'video'}">
 						<div class="previewItem">
 							<input type="hidden" name="imgId" value="${image.id}">
 							<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event, ${image.id})"></span></p>
-							<video src="/upload/${image.path}" controls width="300"/>
+							<video src="${contextPath}/upload/${image.path}" controls width="300"/>
 						</div>
 					</c:if>
 				</c:forEach>
@@ -93,7 +93,7 @@
 
 <hr>
 <c:if test="${post.type == 'image'}">
-	<form id="imageForm" class="typeImage form-inline" action="/admin/post/image" method="post" enctype="multipart/form-data">
+	<form id="imageForm" class="typeImage form-inline" action="${contextPath}/admin/post/image" method="post" enctype="multipart/form-data">
 		<p><strong>이미지 등록</strong> <small>등록 후 드래그로 순서 변경 가능</small></p>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<input type="hidden" name="type" value="image"/>
@@ -104,7 +104,7 @@
 </c:if>
 
 <c:if test="${post.type == 'video'}">
-	<form id="videoForm" class="typeVideo" action="/admin/post/image" method="post" enctype="multipart/form-data">
+	<form id="videoForm" class="typeVideo" action="${contextPath}/admin/post/image" method="post" enctype="multipart/form-data">
 		<p><strong>동영상 등록</strong></p>
 		<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		<input type="hidden" name="type" value="video"/>
@@ -143,7 +143,7 @@ $(function(){
 			var previewTag = '<div class="previewItem">'
 					+'<input type="hidden" name="imgId" value="'+data.id+'">'
 					+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event, '+data.id+')"></span> '+data.title+'</p>'
-					+'<img src="/upload/'+data.path+'">'
+					+'<img src="${contextPath}/upload/'+data.path+'">'
 					+'</div>';
 			$('#previewDiv').append(previewTag);
 
@@ -169,7 +169,7 @@ $(function(){
 			var previewTag = '<div class="previewItem">'
 				+'<input type="hidden" name="imgId" value="'+data.id+'">'
 				+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event)"></span></p>'
-				+'<video src="/upload/'+data.path+'" controls width="300">'
+				+'<video src="${contextPath}/upload/'+data.path+'" controls width="300">'
 				+'</div>';
 			$('#previewDiv').html(previewTag);
 
@@ -189,7 +189,7 @@ function delImg(e, imageId) {
 		var header = $("meta[name='_csrf_header']").attr("content");
 
 		$.ajax({
-			url: '/admin/post/image/' + imageId
+			url: '${contextPath}/admin/post/image/' + imageId
 			,method: 'delete'
 			,beforeSend: function(xhr) {
 				xhr.setRequestHeader(header, token);
@@ -264,14 +264,14 @@ function deletePost(id) {
 		var header = $("meta[name='_csrf_header']").attr("content");
 
 		$.ajax({
-			url: '/admin/post/' + id
+			url: '${contextPath}/admin/post/' + id
 			,method: 'delete'
 			,beforeSend: function(xhr) {
 				xhr.setRequestHeader(header, token);
 			}
 		}).done(function(data) {
 			alert('삭제되었습니다.');
-			location.href = data;
+			location.href = '${contextPath}/'+data;
 		}).fail(function() {
 			alert('오류가 발생했습니다.');
 		});

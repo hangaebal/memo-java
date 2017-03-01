@@ -3,4 +3,4 @@
 <p style="color: red;">오류가 발생했습니다.</p>
 <hr>
 <br>
-<a href="/">홈으로</a>
+<a href="${contextPath}/">홈으로</a>

@@ -9,13 +9,13 @@
 	</c:when>
 	<c:when test="${post.type eq 'video'}">
 		<c:set var="video" value="${imageList[0]}"/>
-		<video src="/upload/${video.path}" width="100%" controls></video>
+		<video src="${contextPath}/upload/${video.path}" width="100%" controls></video>
 	</c:when>
 	<c:when test="${post.type eq 'image'}">
 		<c:forEach items="${imageList}" var="image">
 			<div class="imageItem">
 				<p>${image.title}</p>
-				<img src="/upload/${image.path}" class="modalOpen">
+				<img src="${contextPath}/upload/${image.path}" class="modalOpen">
 			</div>
 		</c:forEach>
 	</c:when>

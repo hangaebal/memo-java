@@ -1,11 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="${contextPath}/js/jquery.form.min.js"></script>
 <style>
 	.cursor {cursor: pointer; text-align: center;}
 	.cursor .glyphicon {font-size: 20px; line-height: 33px;}
 </style>
-<form id="seqForm" action="/admin/post/seq" method="post">
+<form id="seqForm" action="${contextPath}/admin/post/seq" method="post">
 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 <div>
 	<div class="form-horizontal">
@@ -49,7 +49,7 @@
 				<td>${post.type}</td>
 				<td>${post.title}</td>
 				<td>${post.year}</td>
-				<td><a class="btn btn-info" href="/admin/post/edit/${post.id}">수정</a></td>
+				<td><a class="btn btn-info" href="${contextPath}/admin/post/edit/${post.id}">수정</a></td>
 
 			</tr>
 		</c:forEach>
@@ -70,11 +70,11 @@
 	});
 
 	function createPost() {
-		location.href = '/admin/post/create?menuId=' + $('#menuId').val();
+		location.href = '${contextPath}/admin/post/create?menuId=' + $('#menuId').val();
 	}
 
 	function changeMenu() {
-		location.href = '/admin/post?menuId=' + $('#menuId').val();
+		location.href = '${contextPath}/admin/post?menuId=' + $('#menuId').val();
 	}
 
 	$('#seqForm').ajaxForm({

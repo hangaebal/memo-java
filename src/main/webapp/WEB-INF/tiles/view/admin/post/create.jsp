@@ -1,8 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<script src="/js/jquery.form.min.js"></script>
+<script src="${contextPath}/js/jquery.form.min.js"></script>
 <style>
-	#previewDiv {min-height: 300px;}
+	#previewDiv {min-height: 100px;}
 	#previewDiv:after {content:"";display:block; clear: both;}
 	.previewItem {float: left;}
 	.previewItem img {width: 200px;}
@@ -13,7 +13,7 @@
 </style>
 
 <div>
-<form id="postForm" action="/admin/post" method="post">
+<form id="postForm" action="${contextPath}/admin/post" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 
 	<div class="form-horizontal">
@@ -71,7 +71,7 @@
 </form>
 
 <hr>
-<form id="imageForm" class="typeImage form-inline" action="/admin/post/image" method="post" enctype="multipart/form-data">
+<form id="imageForm" class="typeImage form-inline" action="${contextPath}/admin/post/image" method="post" enctype="multipart/form-data">
 	<p><strong>이미지 등록</strong> <small>등록 후 드래그로 순서 변경 가능</small></p>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<input type="hidden" name="type" value="image"/>
@@ -80,7 +80,7 @@
 	<button class="btn btn-info btn-sm" type="submit">이미지 등록</button>
 </form>
 
-<form id="videoForm" class="typeVideo" action="/admin/post/image" method="post" enctype="multipart/form-data">
+<form id="videoForm" class="typeVideo" action="${contextPath}/admin/post/image" method="post" enctype="multipart/form-data">
 	<p><strong>동영상 등록</strong></p>
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<input type="hidden" name="type" value="video"/>
@@ -115,7 +115,7 @@ $(function(){
 			var previewTag = '<div class="previewItem">'
 					+'<input type="hidden" name="imgId" value="'+data.id+'">'
 					+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event)"></span> '+data.title+'</p>'
-					+'<img src="/upload/'+data.path+'">'
+					+'<img src="${contextPath}/upload/'+data.path+'">'
 					+'</div>';
 			$('#previewDiv').append(previewTag);
 
@@ -141,7 +141,7 @@ $(function(){
 			var previewTag = '<div class="previewItem">'
 				+'<input type="hidden" name="imgId" value="'+data.id+'">'
 				+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event)"></span></p>'
-				+'<video src="/upload/'+data.path+'" controls width="300"/>'
+				+'<video src="${contextPath}/upload/'+data.path+'" controls width="300"/>'
 				+'</div>';
 			$('#previewDiv').html(previewTag);
 

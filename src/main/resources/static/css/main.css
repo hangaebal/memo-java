@@ -113,7 +113,7 @@ header {
 	left: -2px;
 	padding: 2px;
 	white-space: nowrap;
-	background: #f0f0f0 url(/img/line_e2e3e3-fff.png) repeat-y 28px 0;
+	background: #f0f0f0 url(../img/line_e2e3e3-fff.png) repeat-y 28px 0;
 	border: 1px solid #979797;
 	box-shadow: 1px 2px 3px #979797;
 }
