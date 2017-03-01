@@ -14,8 +14,8 @@
 	<c:when test="${post.type eq 'image'}">
 		<c:forEach items="${imageList}" var="image">
 			<div class="imageItem">
-				<p>${image.title}</p>
 				<img src="${contextPath}/upload/${image.path}" class="modalOpen">
+				<p>${image.title}</p>
 			</div>
 		</c:forEach>
 	</c:when>
@@ -54,6 +54,5 @@
 		$('#modalImg').css('top', (height-$('#modalImg').outerHeight())/2 + 'px');
 		$('#modalImg').css('left', (width-$('#modalImg').outerWidth())/2 + 'px');
 	}
-
 
 </script>

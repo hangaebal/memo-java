@@ -5,6 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<title><tiles:getAsString name="title" /></title>
 	<link rel="stylesheet" href="${contextPath}/css/normalize.css">
 	<link rel="stylesheet" href="${contextPath}/css/main.css">
@@ -12,8 +13,10 @@
 </head>
 <body>
 	<header>
-		<img id="iconImg" alt="아이콘" src="${contextPath}/img/icon.png">
-		<p id="headerTitle">제목 없음 - 메모장</p>
+		<a href="${contextPath}/">
+			<img id="iconImg" alt="아이콘" src="${contextPath}/img/icon.png">
+			<p id="headerTitle">제목 없음 - 메모장</p>
+		</a>
 
 		<nav>
 			<ul id="mainMenuUl">

@@ -46,6 +46,8 @@ body:after{
 	border-top-right-radius: 5px;
 }
 
+
+
 /* ========== layout ==========*/
 body {
 	padding: 10px;
@@ -53,6 +55,8 @@ body {
 	font-size: 9pt;
 	cursor: default;
 }
+
+a { text-decoration: none; color: #000; }
 
 /* ========== header ==========*/
 header {
@@ -70,6 +74,7 @@ header {
 	left: 0px;
 }
 #headerTitle  {
+	display: inline-block;
 	margin: 0;
 	padding: 1px 0 0 21px;
 	height: 19px;
@@ -77,8 +82,13 @@ header {
 }
 
 /* ========== nav ========== */
+#mainMenuUl:after {
+	content: " ";
+	display: block;
+	height: 0;
+	clear: both;
+}
 #mainMenuUl {
-	height: 17px;
 	background: #dee3f3;
 	border: 1px solid #f0f0f0;
 	border-bottom: 1px solid #b6bccc;
@@ -107,6 +117,7 @@ header {
 }
 
 .subMenuUl {
+	z-index: 9;
 	display: none;
 	position: absolute;
 	top: 17px;
@@ -153,6 +164,7 @@ header {
 section {
 	margin: 42px 2px 50px;
 	min-height: 600px;
+	font-size: 10pt;
 }
 
 
