@@ -1,15 +1,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="${contextPath}/js/jquery.form.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 <style>
-	#previewDiv {min-height: 300px;}
+	#previewDiv {min-height: 100px;}
 	#previewDiv:after {content:"";display:block; clear: both;}
 	.previewItem {float: left;}
 	.previewItem img {width: 200px;}
 	.previewItem .delImg {cursor: pointer;}
 
-	/*.typeImage {display: none;}
-	.typeVideo {display: none;}*/
 </style>
 
 <div>
@@ -30,20 +31,6 @@
 		</div>
 	</div>
 
-
-	<%--<div class="form-horizontal">
-		<div class="form-group">
-			<label class="col-sm-1 control-label">유형</label>
-			<div class="col-sm-4">
-				<select class="form-control" name="type" id="typeSelect" onchange="changeType()">
-					<option value="text" ${post.type == 'text'?'selected':''}>글</option>
-					<option value="image" ${post.type == 'image'?'selected':''}>이미지</option>
-					<option value="video" ${post.type == 'video'?'selected':''}>동영상</option>
-				</select>
-			</div>
-		</div>
-	</div>--%>
-
 	<div class="form-horizontal">
 		<div class="form-group">
 			<label class="col-sm-1 control-label">제목</label>
@@ -63,6 +50,19 @@
 			<label class="control-label">글</label>
 			<textarea class="form-control" name="contents" rows="10">${post.contents}</textarea>
 		</div>
+	</c:if>
+
+	<c:if test="${post.type == 'editor'}">
+		<textarea name="contents" style="display: none"></textarea>
+		<div id="summernote">
+		</div>
+		<script>
+			$('#summernote').summernote({
+				minHeight: 500
+			});
+
+			$('#summernote').summernote('code', '${post.contents}');
+		</script>
 	</c:if>
 
 	<c:if test="${post.type == 'image' or post.type == 'video'}">
@@ -123,6 +123,7 @@
 
 <script>
 $(function(){
+
 	$('#previewDiv').sortable();
 
 	$('#imageForm').ajaxForm({
@@ -168,7 +169,7 @@ $(function(){
 		success: function(data, statusText){
 			var previewTag = '<div class="previewItem">'
 				+'<input type="hidden" name="imgId" value="'+data.id+'">'
-				+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event)"></span></p>'
+				+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event, '+data.id+')"></span></p>'
 				+'<video src="${contextPath}/upload/'+data.path+'" controls width="300">'
 				+'</div>';
 			$('#previewDiv').html(previewTag);
@@ -202,32 +203,11 @@ function delImg(e, imageId) {
 	}
 }
 
-/*function changeType() {
-	if (confirm('정말 유형을 변경할까요?')) {
-		var type = $('#typeSelect').val();
-
-		$('#previewDiv').text('');
-
-		$('.typeText').hide();
-		$('.typeImage').hide();
-		$('.typeVideo').hide();
-		if (type == 'text') {
-			$('.typeText').show();
-		} else if (type == 'image') {
-			$('.typeImage').show();
-		} else if (type == 'video') {
-			$('.typeVideo').show();
-		}
-	} else {
-		$('#typeSelect option[value="${post.type}"]').prop('selected', true);
-	}
-}*/
-
 function save() {
 	var isValid = true;
 
 	var $input = $('input[name="title"]');
-	if ($.trim($input) == "") {
+	if ($.trim($input.val()) == '') {
 		$input.focus();
 		alert('제목은 필수입니다.');
 		isValid = false;
@@ -238,12 +218,20 @@ function save() {
 	var type = '${post.type}';
 	if (type == 'text') {
 		$input = $('textarea[name="contents"]');
-		if ($.trim($input) == "") {
+		if ($.trim($input.val()) == '') {
 			$input.focus();
 			alert('글은 필수입니다.');
 			isValid = false;
 			return false;
 		}
+	} else if (type == 'editor') {
+		if ($('#summernote').summernote('isEmpty') || $.trim($('#summernote').summernote('code')) == '') {
+			$('#summernote').summernote('focus');
+			alert('글은 필수입니다.');
+			isValid = false;
+			return false;
+		}
+		$('textarea[name="contents"]').val($('#summernote').summernote('code'));
 	} else {
 		if ($('input[name="imgId"]').length == 0) {
 			alert('미디어 파일은 필수입니다.');
@@ -259,7 +247,7 @@ function save() {
 
 function deletePost(id) {
 	if (confirm('정말 삭제할까요?')) {
-		//$('#deleteForm').submit();
+
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 

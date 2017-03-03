@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <script src="${contextPath}/js/jquery.form.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.2/summernote.js"></script>
 <style>
 	#previewDiv {min-height: 100px;}
 	#previewDiv:after {content:"";display:block; clear: both;}
@@ -8,6 +11,7 @@
 	.previewItem img {width: 200px;}
 	.previewItem .delImg {cursor: pointer;}
 
+	.note-editor {display: none;}
 	.typeImage {display: none;}
 	.typeVideo {display: none;}
 </style>
@@ -35,6 +39,7 @@
 			<div class="col-sm-4">
 				<select class="form-control" name="type" id="typeSelect" onchange="changeType()">
 					<option value="text">글</option>
+					<option value="editor">에디터</option>
 					<option value="image">이미지</option>
 					<option value="video">동영상</option>
 				</select>
@@ -62,11 +67,13 @@
 		<textarea class="form-control" name="contents" rows="10"></textarea>
 	</div>
 
+	<div id="summernote">
+	</div>
+
 	<div class="typeImage typeVideo">
 		<label class="control-label">미리보기</label>
 		<div id="previewDiv"></div>
 	</div>
-
 
 </form>
 
@@ -95,12 +102,17 @@
 
 <script>
 $(function(){
+
+	$('#summernote').summernote({
+		minHeight: 500
+	});
+
 	$('#previewDiv').sortable();
 
 	$('#imageForm').ajaxForm({
 		beforeSubmit: function (data, frm, opt) {
 			if ($('#imgTitle').val() == '') {
-				alert('제목을 입력하세요.');
+				alert('이미지 제목을 입력하세요.');
 				$('#imgTitle').focus();
 				return false;
 			}
@@ -114,7 +126,7 @@ $(function(){
 		success: function(data, statusText){
 			var previewTag = '<div class="previewItem">'
 					+'<input type="hidden" name="imgId" value="'+data.id+'">'
-					+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event)"></span> '+data.title+'</p>'
+					+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event, '+data.id+')"></span> '+data.title+'</p>'
 					+'<img src="${contextPath}/upload/'+data.path+'">'
 					+'</div>';
 			$('#previewDiv').append(previewTag);
@@ -140,7 +152,7 @@ $(function(){
 		success: function(data, statusText){
 			var previewTag = '<div class="previewItem">'
 				+'<input type="hidden" name="imgId" value="'+data.id+'">'
-				+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event)"></span></p>'
+				+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event, '+data.id+')"></span></p>'
 				+'<video src="${contextPath}/upload/'+data.path+'" controls width="300"/>'
 				+'</div>';
 			$('#previewDiv').html(previewTag);
@@ -155,9 +167,22 @@ $(function(){
 	});
 });
 
-function delImg(e) {
+function delImg(e, imageId) {
 	if (confirm('정말 삭제할까요?')) {
-		$(e.target).parents('.previewItem').remove();
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		$.ajax({
+			url: '${contextPath}/admin/post/image/' + imageId
+			,method: 'delete'
+			,beforeSend: function(xhr) {
+				xhr.setRequestHeader(header, token);
+			}
+		}).done(function() {
+			$(e.target).parents('.previewItem').remove();
+		}).fail(function() {
+			alert('오류가 발생했습니다.');
+		});
 	}
 }
 
@@ -167,10 +192,13 @@ function changeType() {
 	$('#previewDiv').text('');
 
 	$('.typeText').hide();
+	$('.note-editor').hide();
 	$('.typeImage').hide();
 	$('.typeVideo').hide();
 	if (type == 'text') {
 		$('.typeText').show();
+	} else if (type == 'editor') {
+		$('.note-editor').show();
 	} else if (type == 'image') {
 		$('.typeImage').show();
 	} else if (type == 'video') {
@@ -182,7 +210,7 @@ function save() {
 	var isValid = true;
 
 	var $input = $('input[name="title"]');
-	if ($.trim($input) == "") {
+	if ($.trim($input.val()) == '') {
 		$input.focus();
 		alert('제목은 필수입니다.');
 		isValid = false;
@@ -192,12 +220,20 @@ function save() {
 	var type = $('#typeSelect').val();
 	if (type == 'text') {
 		$input = $('textarea[name="contents"]');
-		if ($.trim($input) == "") {
+		if ($.trim($input.val()) == '') {
 			$input.focus();
 			alert('글은 필수입니다.');
 			isValid = false;
 			return false;
 		}
+	} else if (type == 'editor') {
+		if ($('#summernote').summernote('isEmpty') || $.trim($('#summernote').summernote('code')) == '') {
+			$('#summernote').summernote('focus');
+			alert('글은 필수입니다.');
+			isValid = false;
+			return false;
+		}
+		$('textarea[name="contents"]').val($('#summernote').summernote('code'));
 	} else {
 		if ($('input[name="imgId"]').length == 0) {
 			alert('미디어 파일은 필수입니다.');

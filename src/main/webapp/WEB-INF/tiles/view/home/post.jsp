@@ -7,6 +7,9 @@
 	<c:when test="${post.type eq 'text'}">
 		<div>${fn:replace(post.contents, newline, '<br/>')}</div>
 	</c:when>
+	<c:when test="${post.type eq 'editor'}">
+		<div>${post.contents}</div>
+	</c:when>
 	<c:when test="${post.type eq 'video'}">
 		<c:set var="video" value="${imageList[0]}"/>
 		<video src="${contextPath}/upload/${video.path}" width="100%" controls></video>

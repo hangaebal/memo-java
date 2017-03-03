@@ -136,7 +136,8 @@ public class AdminController {
 		adminService.deletePostImage(id);	// 포스트에 속한 이미지 삭제
 		adminService.deletePost(id);		// 포스트 삭제
 
-		return "/admin/post?menuId=" + postTableVO.getMenuId();
+		// location.href 대상 주소
+		return "admin/post?menuId=" + postTableVO.getMenuId();
 	}
 
 	@RequestMapping(value = "/post/edit/{id}", method = RequestMethod.GET)
