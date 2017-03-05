@@ -175,10 +175,22 @@ section {
 	height: 0;
 	clear: both;
 }
-.imageItem {float: left; width: 30%; margin-left: 2.5%; cursor: pointer;}
-.imageItem p { width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
-.imageItem img { width: 100%;}
-.modalOpen { cursor: pointer;}
+.imageItem {
+	float: left;
+	width: 30%;
+	margin-bottom: 40px;
+	margin-left: 2.5%;
+	cursor: pointer;
+}
+.imageItem p {
+	width: 100%;
+}
+.imageItem img {
+	width: 100%;
+}
+.modalOpen {
+	cursor: pointer;
+}
 
 /* ========== modal ========== */
 .modal {
