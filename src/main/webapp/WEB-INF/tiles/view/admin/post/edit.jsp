@@ -74,7 +74,7 @@
 						<div class="previewItem">
 							<input type="hidden" name="imgId" value="${image.id}">
 							<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event, ${image.id})"></span> ${image.title}</p>
-							<img src="${contextPath}/upload/${image.path}">
+							<img src="${contextPath}/upload/${image.thumbPath}">
 						</div>
 					</c:if>
 					<c:if test="${post.type == 'video'}">
@@ -144,7 +144,7 @@ $(function(){
 			var previewTag = '<div class="previewItem">'
 					+'<input type="hidden" name="imgId" value="'+data.id+'">'
 					+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event, '+data.id+')"></span> '+data.title+'</p>'
-					+'<img src="${contextPath}/upload/'+data.path+'">'
+					+'<img src="${contextPath}/upload/'+data.thumbPath+'">'
 					+'</div>';
 			$('#previewDiv').append(previewTag);
 
@@ -169,7 +169,7 @@ $(function(){
 		success: function(data, statusText){
 			var previewTag = '<div class="previewItem">'
 				+'<input type="hidden" name="imgId" value="'+data.id+'">'
-				+'<p><span class="glyphicon glyphicon-remove  delImg" onclick="delImg(event, '+data.id+')"></span></p>'
+				+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event, '+data.id+')"></span></p>'
 				+'<video src="${contextPath}/upload/'+data.path+'" controls width="300">'
 				+'</div>';
 			$('#previewDiv').html(previewTag);

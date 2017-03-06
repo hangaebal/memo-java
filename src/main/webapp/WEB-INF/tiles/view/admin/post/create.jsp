@@ -127,7 +127,7 @@ $(function(){
 			var previewTag = '<div class="previewItem">'
 					+'<input type="hidden" name="imgId" value="'+data.id+'">'
 					+'<p><span class="glyphicon glyphicon-remove delImg" onclick="delImg(event, '+data.id+')"></span> '+data.title+'</p>'
-					+'<img src="${contextPath}/upload/'+data.path+'">'
+					+'<img src="${contextPath}/upload/'+data.thumbPath+'">'
 					+'</div>';
 			$('#previewDiv').append(previewTag);
 

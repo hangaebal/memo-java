@@ -17,7 +17,7 @@
 	<c:when test="${post.type eq 'image'}">
 		<c:forEach items="${imageList}" var="image">
 			<div class="imageItem">
-				<img src="${contextPath}/upload/${image.path}" class="modalOpen">
+				<img src="${contextPath}/upload/${image.thumbPath}" data-path="${contextPath}/upload/${image.path}" class="modalOpen">
 				<p>${image.title}</p>
 			</div>
 		</c:forEach>
@@ -30,7 +30,7 @@
 		$('.modalOpen').click(function(e){
 			e.preventDefault();
 
-			$('#modalImg').attr('src', $(e.target).attr('src'));
+			$('#modalImg').attr('src', $(e.target).attr('data-path'));
 			$('#modalImg').one('load', function() {
 				modalToCenter();
 

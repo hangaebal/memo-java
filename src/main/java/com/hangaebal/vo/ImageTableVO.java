@@ -58,4 +58,15 @@ public class ImageTableVO {
 	public void setDelYn(String delYn) {
 		this.delYn = delYn;
 	}
+
+
+	/**
+	 * 썸네일 path
+	 * @return
+	 */
+	public String getThumbPath() {
+		String ext = path.substring(path.lastIndexOf('.'));
+		String thumbPath = path.substring(0, path.lastIndexOf('.')) + "_thumb" + ext;
+		return thumbPath;
+	}
 }

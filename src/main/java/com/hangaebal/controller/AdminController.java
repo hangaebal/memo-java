@@ -4,6 +4,9 @@ import com.hangaebal.service.AdminService;
 import com.hangaebal.vo.ImageTableVO;
 import com.hangaebal.vo.MenuTableVO;
 import com.hangaebal.vo.PostTableVO;
+import net.coobird.thumbnailator.Thumbnails;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -24,6 +29,10 @@ import java.util.*;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	private final int THUMBNAIL_MAX_SIZE = 700;
 
 	@Value("${upload.directory}")
 	String UPLOAD_DERECTORY;
@@ -186,22 +195,42 @@ public class AdminController {
 		}
 
 		// ===== 파일 저장
-		String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf("."));
-		String saveFileName = UUID.randomUUID().toString().replace("-", "")  + extension;
-		Path path = Paths.get(UPLOAD_DERECTORY + File.separator + type + File.separator + saveFileName);
+		String randomId = UUID.randomUUID().toString().replace("-", "");
+		String extension = multipartFile.getOriginalFilename().substring(multipartFile.getOriginalFilename().lastIndexOf(".")).toLowerCase();
+		String newFileName = randomId + extension;
+		String thumbFileName = randomId + "_thumb" + extension;
+		String fullPath = UPLOAD_DERECTORY + File.separator + type + File.separator + newFileName;
+		Path path = Paths.get(fullPath);
 		try {
 			Files.createDirectories(path.getParent());
 			Files.write(path, multipartFile.getBytes());
+
+			if ("image".equals(type)) {
+				// ===== 썸네일 생성
+				BufferedImage bufferedImage = ImageIO.read(new File(fullPath));
+				double scale;
+				int width = bufferedImage.getWidth();
+				int height = bufferedImage.getHeight();
+				if (width >= height) {
+					scale = Math.min(THUMBNAIL_MAX_SIZE, width) / (double) width;
+				} else {
+					scale = Math.min(THUMBNAIL_MAX_SIZE, height) / (double) height;
+				}
+
+				Thumbnails.of(fullPath)
+						.size((int)(scale * width), (int)(scale * height))
+						.toFile(UPLOAD_DERECTORY + File.separator + type + File.separator + thumbFileName);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			returnMap.put("status","error");
+			returnMap.put("status", "error");
 			return returnMap;
 		}
 
 		// ===== DB insert
 		ImageTableVO imageTableVO = new ImageTableVO();
 		imageTableVO.setTitle(imgTitle);
-		imageTableVO.setPath(type + "/" + saveFileName);
+		imageTableVO.setPath(type + "/" + newFileName);
 
 		adminService.insertImage(imageTableVO);
 
@@ -210,6 +239,7 @@ public class AdminController {
 		returnMap.put("id", imageTableVO.getId());
 		returnMap.put("path", imageTableVO.getPath());
 		if ("image".equals(type)) {
+			returnMap.put("thumbPath", type + "/" + thumbFileName);
 			returnMap.put("title", imageTableVO.getTitle());
 		}
 
