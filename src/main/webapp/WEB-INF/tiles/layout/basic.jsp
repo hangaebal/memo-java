@@ -7,6 +7,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, user-scalable=no">
 	<title><tiles:getAsString name="title" /></title>
+	<link rel="shortcut icon" href="${contextPath}/memo.ico">
 	<link rel="stylesheet" href="${contextPath}/css/normalize.css">
 	<link rel="stylesheet" href="${contextPath}/css/main.css">
 	<script src="${contextPath}/js/jquery-3.1.1.min.js"></script>
