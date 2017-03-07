@@ -211,11 +211,14 @@ public class AdminController {
 				double scale;
 				int width = bufferedImage.getWidth();
 				int height = bufferedImage.getHeight();
-				if (width >= height) {
+
+				// 가로 기준 리사이즈
+				scale = Math.min(THUMBNAIL_MAX_SIZE, width) / (double) width;
+				/*if (width >= height) {
 					scale = Math.min(THUMBNAIL_MAX_SIZE, width) / (double) width;
 				} else {
 					scale = Math.min(THUMBNAIL_MAX_SIZE, height) / (double) height;
-				}
+				}*/
 
 				Thumbnails.of(fullPath)
 						.size((int)(scale * width), (int)(scale * height))
