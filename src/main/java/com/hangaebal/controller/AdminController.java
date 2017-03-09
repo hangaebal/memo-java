@@ -79,7 +79,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/menu/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody String deleteMenu(@PathVariable("id") Long id) {
+	@ResponseBody
+	public String deleteMenu(@PathVariable("id") Long id) {
 		adminService.deleteMenu(id);
 		return "success";
 	}
@@ -99,7 +100,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/post/seq", method = RequestMethod.POST)
-	public @ResponseBody String updatePostSeq(@RequestParam("id") List<Long> idList) {
+	@ResponseBody
+	public String updatePostSeq(@RequestParam("id") List<Long> idList) {
 		Long seq = 0L;
 		PostTableVO postTableVO;
 		for (Long id : idList) {
@@ -140,7 +142,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/post/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody String deletePost(@PathVariable("id") Long id) {
+	@ResponseBody
+	public String deletePost(@PathVariable("id") Long id) {
 		PostTableVO postTableVO = adminService.selectPostDetail(id);
 		adminService.deletePostImage(id);	// 포스트에 속한 이미지 삭제
 		adminService.deletePost(id);		// 포스트 삭제
@@ -183,7 +186,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/post/image", method = RequestMethod.POST)
-	public @ResponseBody Map imageUpload(
+	@ResponseBody
+	public Map imageUpload(
 			@RequestParam("type") String type
 			,@RequestParam("mFile") MultipartFile multipartFile
 			,@RequestParam(value = "imgTitle", required = false) String imgTitle
@@ -250,7 +254,8 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/post/image/{id}", method = RequestMethod.DELETE)
-	public @ResponseBody String deleteImage(@PathVariable("id") Long id) {
+	@ResponseBody
+	public String deleteImage(@PathVariable("id") Long id) {
 		adminService.deleteImage(id);
 		return "success";
 	}
